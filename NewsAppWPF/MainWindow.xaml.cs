@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using NewsAppWPF.ViewModels;
+using NewsAppWPF.Views;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,5 +22,14 @@ namespace NewsAppWPF
         {
             InitializeComponent();
         }
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+        private void ArticleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            CC.Content= new ArticlesViews();
+        }
+
     }
 }
