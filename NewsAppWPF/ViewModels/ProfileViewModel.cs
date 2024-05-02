@@ -1,4 +1,5 @@
-﻿using NewsAppWPF.Commands;
+﻿//using NewsAppWPF.Commands;
+using GalaSoft.MvvmLight.Command;
 using NewsAppWPF.Models;
 using NewsAppWPF.Views;
 using System;

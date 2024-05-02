@@ -3,56 +3,60 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:NewsAppWPF"
+        xmlns:local="clr-namespace:NewsAppWPF" xmlns:local1="clr-namespace:NewsAppWPF.ValidationClasses"
         mc:Ignorable="d"
         Title="RegistrationWindow" Height="450" Width="800">
     <StackPanel Margin="10">
-        <!-- Name Input -->
         <Label Content="Name:"/>
         <TextBox x:Name="NameTextBox" Margin="10">
             <TextBox.Text>
-                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:NotEmptyValidationRule />
+                        <local1:StringNotEmptyValidationRule />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
         </TextBox>
 
-        <!-- Email Input -->
         <Label Content="Email:"/>
         <TextBox x:Name="EmailTextBox" Margin="10">
             <TextBox.Text>
-                <Binding Path="Email" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:EmailValidationRule />
+                        <local1:EmailValidationRule />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
         </TextBox>
 
-        <!-- Password Input -->
         <Label Content="Password:"/>
         <PasswordBox x:Name="PasswordBox" Margin="10">
             <PasswordBox.Tag>
-                <Binding ElementName="PasswordBox" Path="Password" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                <Binding Path="Password" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:NotEmptyValidationRule />
+                        <local1:StringNotEmptyValidationRule />
                     </Binding.ValidationRules>
                 </Binding>
             </PasswordBox.Tag>
         </PasswordBox>
 
-        <!-- Subscription Type Input -->
         <Label Content="Subscription Type:"/>
-        <ComboBox x:Name="SubscriptionTypeComboBox" Margin="10">
-            <ComboBoxItem Content="Free"/>
-            <ComboBoxItem Content="Monthly-Premium"/>
-            <ComboBoxItem Content="Yearly-Premium"/>
+        <ComboBox x:Name="SubscriptionTypeComboBox" Margin="10" SelectedValue="{Binding SubscriptionType, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+            <ComboBox.Items>
+                <ComboBoxItem Content="Free"/>
+                <ComboBoxItem Content="Monthly-Premium"/>
+                <ComboBoxItem Content="Yearly-Premium"/>
+            </ComboBox.Items>
+            <ComboBox.SelectedItem>
+                <Binding Path="SubscriptionType" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local1:SubscriptionSelectedValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.SelectedItem>
         </ComboBox>
 
         <Button Content="Register" Margin="10" Click="RegisterButton_Click"/>
-        
     </StackPanel>
 
 </Window>

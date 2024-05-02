@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace NewsAppWPF
+namespace NewsAppWPF.ValidationClasses
 {
     public class EmailValidationRule : ValidationRule
     {

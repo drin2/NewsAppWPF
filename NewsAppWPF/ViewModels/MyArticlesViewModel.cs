@@ -1,27 +1,24 @@
-﻿//using NewsAppWPF.Commands;
-using GalaSoft.MvvmLight.Command;
-using Microsoft.Win32;
-using NewsAppWPF.Models;
+﻿using NewsAppWPF.Models;
 using NewsAppWPF.Views;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
+using System.Windows;
+using GalaSoft.MvvmLight.Command;
+using Microsoft.Win32;
+using System.IO;
 using System.Xml.Serialization;
 
 namespace NewsAppWPF.ViewModels
 {
-
-    public class ArticlesViewModel : INotifyPropertyChanged
+    public class MyArticlesViewModel: INotifyPropertyChanged
     {
         public ICommand ClearFiltersCommand { get; }
         public ICommand OpenArticleDetailCommand { get; private set; }
@@ -38,18 +35,8 @@ namespace NewsAppWPF.ViewModels
         private DateTime? _startDate;
         private DateTime? _endDate;
         private string _searchAuthor;
-        private Advertisement _currentAd;
-        public Advertisement CurrentAd
-        {
-            get => _currentAd;
-            set
-            {
-                _currentAd = value;
-                OnPropertyChanged(nameof(CurrentAd));
-            }
-        }
 
-        public ArticlesViewModel()
+        public MyArticlesViewModel()
         {
             Articles = new ObservableCollection<Article>();
             FilteredArticles = new ObservableCollection<Article>();
@@ -57,12 +44,13 @@ namespace NewsAppWPF.ViewModels
             LoadCategories();
             ClearFiltersCommand = new RelayCommand(ExecuteClearFilters);
             OpenArticleDetailCommand = new RelayCommand<object>(ArticleSelected);
+            SearchAuthor = SessionManager.CurrentUser.Name;
             ExportToCSVCommand = new RelayCommand(ExportToCSV);
             ExportToXMLCommand = new RelayCommand(ExportToXML);
 
 
+
             LoadArticlesAsync();
-            LoadAdvertisementsAsync();
         }
         private void ExportToCSV()
         {
@@ -100,7 +88,7 @@ namespace NewsAppWPF.ViewModels
         {
             if (articleObject is Article article)
             {
-                var detailWindow = new ArticleDetailWindow(article);
+                var detailWindow = new ArticleDetailEditWindow(article);
                 detailWindow.Show();
             }
         }
@@ -109,7 +97,6 @@ namespace NewsAppWPF.ViewModels
             StartDate = null;
             EndDate = null;
             SelectedCategory = null;
-            SearchAuthor = "";
             FilterArticles(); // Refresh the filtered articles
         }
 
@@ -166,7 +153,7 @@ namespace NewsAppWPF.ViewModels
             }
         }
 
-        
+
         private void LoadCategories()
         {
             Categories.Add("Finance");
@@ -217,30 +204,7 @@ namespace NewsAppWPF.ViewModels
                 }
             }
         }
-        public async Task LoadAdvertisementsAsync()
-        {
-            if (SessionManager.CurrentUser.SubscriptionType == "Free")
-            {
-                using (var client = new HttpClient())
-                {
-                    var response = await client.GetAsync("https://localhost:7002/api/AdPlacements/ForShow");
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var json = await response.Content.ReadAsStringAsync();
-                        var adPlacements = JsonConvert.DeserializeObject<List<AdPlacementDTO>>(json);
 
-                        var validAds = adPlacements.Where(ap => (DateOnly.FromDateTime(DateTime.Now) <= ap.PlacementDate.AddDays(ap.Ad.Duration))
-                        ).ToList();
-
-                        if (validAds.Any())
-                        {
-                            var randomAd = validAds[new Random().Next(validAds.Count)];
-                            CurrentAd = randomAd.Ad;  // Directly access the Ad property
-                        }
-                    }
-                }
-            }
-        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -249,3 +213,4 @@ namespace NewsAppWPF.ViewModels
         }
     }
 }
+

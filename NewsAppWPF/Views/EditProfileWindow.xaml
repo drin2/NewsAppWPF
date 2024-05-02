@@ -3,14 +3,30 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:NewsAppWPF.Views"
+        xmlns:local="clr-namespace:NewsAppWPF.Views" xmlns:rules="clr-namespace:NewsAppWPF.ValidationClasses"
         mc:Ignorable="d"
         Title="EditProfileWindow" Height="450" Width="800">
     <StackPanel Margin="10">
         <Label Content="Name:"/>
-        <TextBox x:Name="NameTextBox" Text="{Binding Name}" Margin="5"/>
+        <TextBox x:Name="NameTextBox">
+            <TextBox.Text>
+                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <rules:NameValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <Label Content="Email:"/>
-        <TextBox x:Name="EmailTextBox" Text="{Binding Email}" Margin="5"/>
+        <TextBox x:Name="EmailTextBox">
+            <TextBox.Text>
+                <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <rules:EmailValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
             <Button Content="Save" Click="SaveButton_Click" Margin="5"/>
             <Button Content="Cancel" Click="CancelButton_Click" Margin="5"/>

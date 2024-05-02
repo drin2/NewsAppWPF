@@ -11,41 +11,48 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel>
-            <!-- Date Picker for Start Date -->
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-                <Label Content="Start Date:" VerticalAlignment="Center" Margin="5"/>
-                <DatePicker x:Name="StartDatePicker" SelectedDate="{Binding StartDate, Mode=TwoWay}" DisplayDateEnd="{Binding EndDate}" Margin="5" Width="115"/>
-            </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="300"/>
+            <!-- Fixed height for the data grid row -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-            <!-- Date Picker for End Date -->
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-                <Label Content="End Date:" VerticalAlignment="Center" Margin="5"/>
-                <DatePicker x:Name="EndDatePicker" SelectedDate="{Binding EndDate, Mode=TwoWay}" DisplayDateStart="{Binding StartDate}" Margin="5" Width="121"/>
-            </StackPanel>
+        <!-- Filter Section -->
+        <StackPanel Grid.Column="0" Grid.Row="0">
+            <Label Content="Start Date:" VerticalAlignment="Center" Margin="5"/>
+            <DatePicker x:Name="StartDatePicker" SelectedDate="{Binding StartDate, Mode=TwoWay}" DisplayDateEnd="{Binding EndDate}" Margin="5" Width="115"/>
+            <Label Content="End Date:" VerticalAlignment="Center" Margin="5"/>
+            <DatePicker x:Name="EndDatePicker" SelectedDate="{Binding EndDate, Mode=TwoWay}" DisplayDateStart="{Binding StartDate}" Margin="5" Width="121"/>
+            <Label Content="Category:" VerticalAlignment="Center" Margin="5"/>
+            <ComboBox x:Name="CategoryComboBox" SelectedItem="{Binding SelectedCategory}" ItemsSource="{Binding Categories}" IsSynchronizedWithCurrentItem="True" FontFamily="Segoe UI" FontSize="12" Foreground="Black" Background="White" Margin="5" Width="119"/>
+            <Label Content="Search by Author:" VerticalAlignment="Center" Margin="5"/>
+            <TextBox x:Name="AuthorSearchBox" Text="{Binding SearchAuthor}" Margin="5" Width="79"/>
+            <Button Content="Clear Filters" Command="{Binding ClearFiltersCommand}" Margin="5,10,5,10"/>
+            <Button Content="Export to CSV" Command="{Binding ExportToCSVCommand}" Margin="5,0,5,0"/>
+            <Button Content="Export to XML" Command="{Binding ExportToXMLCommand}" Margin="5,0,5,0"/>
 
-            <!-- ComboBox for Category Selection -->
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-                <Label Content="Category:" VerticalAlignment="Center" Margin="5"/>
-                <ComboBox x:Name="CategoryComboBox" SelectedItem="{Binding SelectedCategory}" ItemsSource="{Binding Categories}" IsSynchronizedWithCurrentItem="True"
-              FontFamily="Segoe UI" FontSize="12" Foreground="Black" Background="White" Margin="5" Width="119"/>
-            </StackPanel>
-
-            <!-- TextBox for Author Search -->
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-                <Label Content="Search by Author:" VerticalAlignment="Center" Margin="5"/>
-                <TextBox x:Name="AuthorSearchBox" Text="{Binding SearchAuthor}" Margin="5" Width="79"/>
-            </StackPanel>
-            <Button Content="Clear Filters" Command="{Binding ClearFiltersCommand}" />
-            <!-- Other controls -->
         </StackPanel>
-        <DataGrid x:Name="ArticlesDataGrid" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding FilteredArticles}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
-                <DataGridTextColumn Header="Author" Binding="{Binding AuthorName}"/>
-                <DataGridTextColumn Header="Category" Binding="{Binding Category}"/>
-                <DataGridTextColumn Header="Publication Date" Binding="{Binding PublicationDate, StringFormat={}{0:d}}"/>
-            </DataGrid.Columns>
-        </DataGrid>
+
+        <!-- Data Grid with Scroll Viewer -->
+        <ScrollViewer Grid.Column="1" Grid.Row="0" VerticalScrollBarVisibility="Auto">
+            <DataGrid x:Name="ArticlesDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding FilteredArticles}" IsReadOnly="True" Height="300">
+                <DataGrid.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OpenArticleDetailCommand}" CommandParameter="{Binding SelectedItem, ElementName=ArticlesDataGrid}"/>
+                </DataGrid.InputBindings>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
+                    <DataGridTextColumn Header="Author" Binding="{Binding AuthorName}"/>
+                    <DataGridTextColumn Header="Category" Binding="{Binding Category}"/>
+                    <DataGridTextColumn Header="Publication Date" Binding="{Binding PublicationDate, StringFormat={}{0:d}}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
+
+        <!-- Advertisement Section -->
+        <StackPanel Grid.Column="1" Grid.Row="1" Visibility="{Binding CurrentAdVisibility}">
+            <TextBlock Text="{Binding CurrentAd.Title}" FontWeight="Bold" FontSize="16"/>
+            <TextBlock Text="{Binding CurrentAd.Text}"/>
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -11,11 +12,13 @@ namespace NewsAppWPF.Models
     public class Article : INotifyPropertyChanged
     {
         private int articleId;
-        private string? title;
-        private string? text;
+        private string title;
+        private string text;
         private DateTime publicationDate;
-        private string? category;
-        private string? authorName;  // Assuming you only need the author's name for display
+        private string category;
+        private string authorName;
+        private ObservableCollection<ArticlePhoto> articlePhotos;
+        private ObservableCollection<Comment> comments;
 
         public int ArticleId
         {
@@ -51,6 +54,18 @@ namespace NewsAppWPF.Models
         {
             get => authorName;
             set { authorName = value; OnPropertyChanged(); }
+        }
+
+        public ObservableCollection<ArticlePhoto> ArticlePhotos
+        {
+            get => articlePhotos ?? (articlePhotos = new ObservableCollection<ArticlePhoto>());
+            set { articlePhotos = value; OnPropertyChanged(); }
+        }
+
+        public ObservableCollection<Comment> Comments
+        {
+            get => comments ?? (comments = new ObservableCollection<Comment>());
+            set { comments = value; OnPropertyChanged(); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

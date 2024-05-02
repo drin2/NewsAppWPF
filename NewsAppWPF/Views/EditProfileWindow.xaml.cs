@@ -33,6 +33,11 @@ namespace NewsAppWPF.Views
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            if (Validation.GetHasError(NameTextBox) || Validation.GetHasError(EmailTextBox))
+            {
+                MessageBox.Show("Please correct the errors before saving.");
+                return;
+            }
             // Assume we have a method to update the user via API
             UpdateUserProfile(User);
             this.DialogResult = true;  // Close the window

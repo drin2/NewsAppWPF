@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NewsAppWPF.Views"
         mc:Ignorable="d"
-        Title="PublisherWindow" Height="450" Width="800">
+        Title="PublisherWindow" Height="550" Width="1000">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.25*"/>
@@ -16,6 +16,10 @@
                      Checked="ArticleButton_Checked"/>
             <RadioButton x:Name="ProfileButton" Content="Profile"
                          Checked="ProfileButton_Checked"/>
+            <RadioButton x:Name="MyArticlesButton" Content="MyArticles"
+             Checked="MyArticlesButton_Checked"/>
+            <RadioButton x:Name="PublishArticleButton" Content="Publish Article"
+            Checked="PublishArticleButton_Checked"/>
         </StackPanel>
         <ContentControl x:Name="CC" Grid.Column="1"/>
     </Grid>

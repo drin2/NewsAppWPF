@@ -32,5 +32,16 @@ namespace NewsAppWPF.Views
         {
             CC.Content = new ProfileView();
         }
+        private void MyArticlesButton_Checked(object sender, RoutedEventArgs e)
+        {
+            CC.Content = new MyArticlesView();
+
+        }
+        
+        private void PublishArticleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            CC.Content = new PublishArticleView();
+
+        }
     }
 }

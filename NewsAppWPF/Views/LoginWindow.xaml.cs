@@ -1,4 +1,5 @@
 ﻿using NewsAppWPF.Models;
+using NewsAppWPF.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -69,7 +70,7 @@ namespace NewsAppWPF.Views
                         MessageBox.Show("Failed to retrieve subscription details.");
                         return false;
                     }
-
+                    await EventService.LogEvent("User login", SessionManager.CurrentUser.UserId);
                     return true;
                 }
             }

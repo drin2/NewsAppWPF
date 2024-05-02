@@ -16,6 +16,22 @@
                      Checked="ArticleButton_Checked"/>
             <RadioButton x:Name="ProfileButton" Content="Profile"
                          Checked="ProfileButton_Checked"/>
+            <RadioButton x:Name="AdvertismentsButton" Content="Advertisments"
+             Checked="AdvertismentsButton_Checked"/>
+            <RadioButton x:Name="AdvertismentsPlaceButton" Content="Add placment"
+            Checked="AdvertismentsPlaceButton_Checked"/>
+            <RadioButton x:Name="EventLogButton" Content="Event Logs"
+Checked="EventLogButton_Checked"/>
+            <RadioButton x:Name="ViewSessionButton" Content="Viewing Sessions Log"
+Checked="ViewSessionButton_Checked"/>
+            <RadioButton x:Name="AddAdvertismentButton" Content="Add new advertisement"
+Checked="AddAdvertismentButton_Checked"/>
+            <RadioButton x:Name="AddPublisherButton" Content="Add new publisher"
+Checked="AddPublisherButton_Checked"/>
+            <RadioButton x:Name="ArticleStatsButton" Content="Article Statistics"
+Checked="ArticleStatsButton_Checked"/>
+            <RadioButton x:Name="SubscriptionStatsButton" Content="Subscription statistics"
+Checked="SubscriptionStatsButton_Checked"/>
         </StackPanel>
         <ContentControl x:Name="CC" Grid.Column="1"/>
     </Grid>

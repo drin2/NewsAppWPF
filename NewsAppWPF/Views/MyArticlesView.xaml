@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="NewsAppWPF.Views.MyArticlesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NewsAppWPF.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <!-- Date Picker for Start Date -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                <Label Content="Start Date:" VerticalAlignment="Center" Margin="5"/>
+                <DatePicker x:Name="StartDatePicker" SelectedDate="{Binding StartDate, Mode=TwoWay}" DisplayDateEnd="{Binding EndDate}" Margin="5" Width="115"/>
+            </StackPanel>
+
+            <!-- Date Picker for End Date -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                <Label Content="End Date:" VerticalAlignment="Center" Margin="5"/>
+                <DatePicker x:Name="EndDatePicker" SelectedDate="{Binding EndDate, Mode=TwoWay}" DisplayDateStart="{Binding StartDate}" Margin="5" Width="121"/>
+            </StackPanel>
+
+            <!-- ComboBox for Category Selection -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                <Label Content="Category:" VerticalAlignment="Center" Margin="5"/>
+                <ComboBox x:Name="CategoryComboBox" SelectedItem="{Binding SelectedCategory}" ItemsSource="{Binding Categories}" IsSynchronizedWithCurrentItem="True"
+          FontFamily="Segoe UI" FontSize="12" Foreground="Black" Background="White" Margin="5" Width="119"/>
+            </StackPanel>
+
+            <Button Content="Clear Filters" Command="{Binding ClearFiltersCommand}" />
+            <Button Content="Export to CSV" Command="{Binding ExportToCSVCommand}" Margin="5"/>
+            <Button Content="Export to XML" Command="{Binding ExportToXMLCommand}" Margin="5"/>
+
+            <!-- Other controls -->
+        </StackPanel>
+        <DataGrid x:Name="ArticlesDataGrid" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding FilteredArticles}" IsReadOnly="True">
+            <DataGrid.InputBindings>
+                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OpenArticleDetailCommand}" CommandParameter="{Binding SelectedItem, ElementName=ArticlesDataGrid}"/>
+            </DataGrid.InputBindings>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
+                <DataGridTextColumn Header="Author" Binding="{Binding AuthorName}"/>
+                <DataGridTextColumn Header="Category" Binding="{Binding Category}"/>
+                <DataGridTextColumn Header="Publication Date" Binding="{Binding PublicationDate, StringFormat={}{0:d}}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

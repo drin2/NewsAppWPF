@@ -1,0 +1,24 @@
+﻿<Window x:Class="NewsAppWPF.Views.ArticleDetailEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NewsAppWPF.Views" xmlns:val="clr-namespace:NewsAppWPF.ValidationClasses"
+        mc:Ignorable="d"
+        Title="ArticleDetailEditWindow" Height="550" Width="800">
+    <Grid>
+        <Label Content="Text:" Grid.Row="0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TextTextBox" Margin="5,36,5,55" AcceptsReturn="True" TextWrapping="Wrap">
+            <TextBox.Text>
+                <Binding Path="Article.Text" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <val:StringNotEmptyValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <Button Content="Save Changes" Command="{Binding SaveCommand}" Margin="390,484,5,5"/>
+        <Button Content="Delete Article" Command="{Binding DeleteCommand}" Margin="5,484,415,5"/>
+    </Grid>
+</Window>

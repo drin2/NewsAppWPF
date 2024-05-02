@@ -32,5 +32,41 @@ namespace NewsAppWPF.Views
         {
             CC.Content = new ProfileView();
         }
+        
+        private void AdvertismentsButton_Checked(object sender, RoutedEventArgs e)
+        {
+            CC.Content = new AdvertisementView();
+        }
+        
+        private void AdvertismentsPlaceButton_Checked(object sender, RoutedEventArgs e)
+        {
+            CC.Content = new AdPlacementView();
+        }
+        private void EventLogButton_Checked(object sender, RoutedEventArgs e)
+        {
+            CC.Content = new EventLogView();
+        }
+        private void ViewSessionButton_Checked(object sender, RoutedEventArgs e)
+        {
+            CC.Content = new ViewingSessionView();
+        }
+        private void AddAdvertismentButton_Checked(object sender, RoutedEventArgs e)
+        {
+            CC.Content = new AddAdvertisementView();
+        }
+        private void AddPublisherButton_Checked(object sender, RoutedEventArgs e)
+        {
+            CC.Content = new AddPublisher();
+        }
+        private void ArticleStatsButton_Checked(object sender, RoutedEventArgs e)
+        {
+            CC.Content = new ArticleStatisticsView();
+        }
+        private void SubscriptionStatsButton_Checked(object sender, RoutedEventArgs e)
+        {
+            CC.Content = new SubscriptionPieChartView();
+        }
+
+
     }
 }
